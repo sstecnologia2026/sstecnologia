@@ -508,24 +508,26 @@ footer {
       </div>
     </div>
     <div class="fade-in">
-      <form class="contato-form" onsubmit="enviarForm(event)">
+      <form class="contato-form" action="https://formspree.io/f/mdavadqd" method="POST">
+        <input type="hidden" name="_subject" value="Novo contato - SS Tecnologia">
+        <input type="hidden" name="_next" value="https://sstecnologia2026.github.io/sstecnologia?enviado=true">
         <div class="form-row">
           <div class="form-group">
             <label>Nome *</label>
-            <input type="text" placeholder="Seu nome" required>
+            <input type="text" placeholder="Seu nome" name="nome" required>
           </div>
           <div class="form-group">
             <label>WhatsApp *</label>
-            <input type="tel" placeholder="(99) 99999-9999" required>
+            <input type="tel" placeholder="(99) 99999-9999" name="whatsapp" required>
           </div>
         </div>
         <div class="form-group">
           <label>E-mail</label>
-          <input type="email" placeholder="seu@email.com">
+          <input type="email" placeholder="seu@email.com" name="email">
         </div>
         <div class="form-group">
           <label>Produto de Interesse</label>
-          <select>
+          <select name="produto">
             <option value="">Selecione...</option>
             <option>System PDV PRO</option>
             <option>Suporte Técnico</option>
@@ -534,7 +536,7 @@ footer {
         </div>
         <div class="form-group">
           <label>Mensagem</label>
-          <textarea placeholder="Conte-nos sobre seu negócio e como podemos ajudar..."></textarea>
+          <textarea placeholder="Conte-nos sobre seu negócio e como podemos ajudar..." name="mensagem"></textarea>
         </div>
         <button type="submit" class="btn-enviar">Enviar Mensagem →</button>
       </form>
@@ -557,6 +559,16 @@ footer {
 </footer>
 
 <script>
+// Mensagem de sucesso
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('enviado') === 'true') {
+  const banner = document.createElement('div');
+  banner.style.cssText = 'position:fixed;top:80px;right:20px;z-index:999;background:linear-gradient(135deg,#1a6e3a,#2d9e5a);color:#fff;padding:1rem 1.5rem;border-radius:12px;font-family:DM Sans,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,0.3);';
+  banner.innerHTML = '✓ Mensagem enviada com sucesso!';
+  document.body.appendChild(banner);
+  setTimeout(() => banner.remove(), 5000);
+}
+
 // Animação scroll
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => {
@@ -575,7 +587,7 @@ window.addEventListener('scroll', () => {
 });
 
 // Formulário
-function enviarForm(e) {
+
   e.preventDefault();
   const btn = e.target.querySelector('.btn-enviar');
   btn.textContent = '✓ Mensagem enviada!';
