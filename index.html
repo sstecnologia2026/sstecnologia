@@ -559,45 +559,34 @@ footer {
 </footer>
 
 <script>
-// Mensagem de sucesso
+// Mensagem de sucesso após envio do formulário
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get('enviado') === 'true') {
-  const banner = document.createElement('div');
-  banner.style.cssText = 'position:fixed;top:80px;right:20px;z-index:999;background:linear-gradient(135deg,#1a6e3a,#2d9e5a);color:#fff;padding:1rem 1.5rem;border-radius:12px;font-family:DM Sans,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,0.3);';
-  banner.innerHTML = '✓ Mensagem enviada com sucesso!';
-  document.body.appendChild(banner);
-  setTimeout(() => banner.remove(), 5000);
+  window.addEventListener('load', function() {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:80px;right:20px;z-index:999;background:linear-gradient(135deg,#1a6e3a,#2d9e5a);color:#fff;padding:1rem 1.5rem;border-radius:12px;font-family:DM Sans,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,0.3);';
+    banner.innerHTML = '&#10003; Mensagem enviada com sucesso!';
+    document.body.appendChild(banner);
+    setTimeout(function() { banner.remove(); }, 5000);
+  });
 }
 
 // Animação scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e, i) {
     if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('visible'), i * 100);
+      setTimeout(function() { e.target.classList.add('visible'); }, i * 100);
     }
   });
 }, { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
 
 // Nav scroll
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', function() {
   const nav = document.querySelector('nav');
   nav.style.background = window.scrollY > 50
     ? 'rgba(5,13,31,0.97)' : 'rgba(5,13,31,0.85)';
 });
-
-// Formulário
-
-  e.preventDefault();
-  const btn = e.target.querySelector('.btn-enviar');
-  btn.textContent = '✓ Mensagem enviada!';
-  btn.style.background = 'linear-gradient(135deg,#1a6e3a,#2d9e5a)';
-  setTimeout(() => {
-    btn.textContent = 'Enviar Mensagem →';
-    btn.style.background = '';
-    e.target.reset();
-  }, 3000);
-}
 </script>
 </body>
 </html>
